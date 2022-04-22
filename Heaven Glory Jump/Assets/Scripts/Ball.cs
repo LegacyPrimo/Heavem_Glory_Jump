@@ -4,8 +4,17 @@ using UnityEngine;
 
 public class Ball : MonoBehaviour
 {
+    public static Ball instance;
+
     public Rigidbody rb;
     public float jumpForce;
+
+    [SerializeField] private FloatValue lifeValue;
+
+    private void Awake()
+    {
+        instance = this;
+    }
 
     void Start()
     {
@@ -18,9 +27,13 @@ public class Ball : MonoBehaviour
         
     }
 
+    public void CheckHealth(float damageTaken) 
+    {
+        lifeValue.runtimeValue -= damageTaken;
+    }
+
     private void OnCollisionEnter(Collision collision)
     {
         rb.AddForce(Vector3.up * jumpForce);
-
     }
 }
